@@ -1,0 +1,24 @@
+{
+  "name": "loginpage-fullstack",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fullstack Login Application",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "start": "cd backend && node server.js",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm start",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "test": "concurrently \"cd backend && npm test\" \"cd frontend && npm test\"",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

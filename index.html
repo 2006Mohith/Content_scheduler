@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup Form</title>
+   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        /* Copyright (c) 2025 by Leonam Silva de Souza (https://codepen.io/leonam-silva-de-souza/pen/vYoazQq) */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            text-decoration: none;
+            list-style: none;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            width: 850px;
+            height: 550px;
+            background: rgba(255, 255, 255, 0.95);
+            margin: 20px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .container h1 {
+            font-size: 36px;
+            margin: -10px 0;
+        }
+
+        .container p {
+            font-size: 14.5px;
+            margin: 15px 0;
+        }
+
+        form { width: 100%; }
+
+        .form-box {
+            position: absolute;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            color: #333;
+            text-align: center;
+            padding: 40px;
+            z-index: 1;
+            transition: .6s ease-in-out 1.2s, visibility 0s 1s;
+        }
+
+        .container.active .form-box { right: 50%; }
+
+        .form-box.register { visibility: hidden; }
+        .container.active .form-box.register { visibility: visible; }
+
+        .input-box {
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 13px 50px 13px 20px;
+            background: #eee;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .input-box input::placeholder {
+            color: #888;
+            font-weight: 400;
+        }
+        
+        .input-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+        }
+
+        .forgot-link { margin: -15px 0 15px; }
+        .forgot-link a {
+            font-size: 14.5px;
+            color: #333;
+        }
+
+        .btn {
+            width: 100%;
+            height: 48px;
+            background: #6a11cb;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #fff;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #5e0ebd;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(90, 125, 232, 0.3);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 24px;
+            color: #333;
+            margin: 0 8px;
+            transition: all 0.3s ease;
+        }
+        .social-icons a:nth-child(1):hover {
+            background: #DB4437;
+            color: white;
+            border-color: #DB4437;
+            transform: translateY(-3px);
+        }
+        
+        .social-icons a:nth-child(2):hover {
+            background: #4267B2;
+            color: white;
+            border-color: #4267B2;
+            transform: translateY(-3px);
+        }
+        
+        .social-icons a:nth-child(3):hover {
+            background: #333;
+            color: white;
+            border-color: #333;
+            transform: translateY(-3px);
+        }
+        
+        .social-icons a:nth-child(4):hover {
+            background: #0077B5;
+            color: white;
+            border-color: #0077B5;
+            transform: translateY(-3px);
+        }
+        
+        .social-icons a:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .toggle-box {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .toggle-box::before {
+            content: '';
+            position: absolute;
+            left: -250%;
+            width: 300%;
+            height: 100%;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            border-radius: 150px;
+            z-index: 2;
+            transition: 1.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 10px 30px rgba(106, 17, 203, 0.4);
+        }
+
+        .container.active .toggle-box::before { left: 50%; }
+
+        .toggle-panel {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            transition: .6s ease-in-out;
+        }
+
+        .toggle-panel.toggle-left { 
+            left: 0;
+            transition-delay: 1.2s; 
+        }
+        .container.active .toggle-panel.toggle-left {
+            left: -50%;
+            transition-delay: .6s;
+        }
+
+        .toggle-panel.toggle-right { 
+            right: -50%;
+            transition-delay: .6s;
+        }
+        .container.active .toggle-panel.toggle-right {
+            right: 0;
+            transition-delay: 1.2s;
+        }
+
+        .toggle-panel p { margin-bottom: 20px; }
+
+        .toggle-panel .btn {
+            width: 160px;
+            height: 46px;
+            background: transparent;
+            border: 2px solid #fff;
+            box-shadow: none;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .toggle-panel .btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Alert System */
+        .alert-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 350px;
+            width: 100%;
+        }
+
+        .alert {
+            position: relative;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: translateX(150%);
+            animation: slideIn 0.5s forwards, fadeOut 0.5s forwards 4.5s;
+            opacity: 0;
+        }
+
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert i {
+            font-size: 22px;
+        }
+
+        .alert-close {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            font-size: 18px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .alert-close:hover {
+            opacity: 1;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffc107;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+        }
+
+        @keyframes slideIn {
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            0% { 
+                opacity: 1;
+                transform: translateX(0);
+            }
+            80% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 650px) {
+            .container { height: calc(100vh - 40px); }
+
+            .form-box {
+                bottom: 0;
+                width: 100%;
+                height: 70%;
+            }
+
+            .container.active .form-box {
+                right: 0;
+                bottom: 30%;
+            }
+
+            .toggle-box::before {
+                left: 0;
+                top: -270%;
+                width: 100%;
+                height: 300%;
+                border-radius: 20vw;
+            }
+
+            .container.active .toggle-box::before {
+                left: 0;
+                top: 70%;
+            }
+
+            .container.active .toggle-panel.toggle-left {
+                left: 0;
+                top: -30%;
+            }
+
+            .toggle-panel { 
+                width: 100%;
+                height: 30%;
+            }
+            .toggle-panel.toggle-left { top: 0; }
+            .toggle-panel.toggle-right {
+                right: 0;
+                bottom: -30%;
+            }
+
+            .container.active .toggle-panel.toggle-right { bottom: 0; }
+        }
+
+        @media screen and (max-width: 400px) {
+            .form-box { padding: 20px; }
+
+            .toggle-panel h1 { font-size: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="alert-container"></div>
+
+    <div class="container" id="authContainer">
+        <div class="form-box login">
+            <form id="loginForm">
+                <h1>Login</h1>
+                <div class="input-box">
+                    <input type="text" id="loginUsername" placeholder="Username or Email" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <div class="forgot-link">
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <p>or login with social platforms</p>
+                <div class="social-icons">
+                    <a href="#"><i class='bx bxl-google'></i></a>
+                    <a href="#"><i class='bx bxl-facebook'></i></a>
+                    <a href="#"><i class='bx bxl-github'></i></a>
+                    <a href="#"><i class='bx bxl-linkedin'></i></a>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-box register">
+            <form id="registerForm">
+                <h1>Registration</h1>
+                <div class="input-box">
+                    <input type="text" id="regUsername" placeholder="Username" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="email" id="regEmail" placeholder="Email" required>
+                    <i class='bx bxs-envelope'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="regPassword" placeholder="Password" required minlength="6">
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <button type="submit" class="btn">Register</button>
+                <p>or register with social platforms</p>
+                <div class="social-icons">
+                    <a href="#"><i class='bx bxl-google'></i></a>
+                    <a href="#"><i class='bx bxl-facebook'></i></a>
+                    <a href="#"><i class='bx bxl-github'></i></a>
+                    <a href="#"><i class='bx bxl-linkedin'></i></a>
+                </div>
+            </form>
+        </div>
+
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <h1>Hello, Welcome!</h1>
+                <p>Don't have an account?</p>
+                <button class="btn register-btn">Register</button>
+            </div>
+
+            <div class="toggle-panel toggle-right">
+                <h1>Welcome Back!</h1>
+                <p>Already have an account?</p>
+                <button class="btn login-btn">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between login and register forms
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('authContainer');
+            const registerBtn = document.querySelector('.register-btn');
+            const loginBtn = document.querySelector('.login-btn');
+            
+            registerBtn.addEventListener('click', () => {
+                container.classList.add('active');
+            });
+            
+            loginBtn.addEventListener('click', () => {
+                container.classList.remove('active');
+            });
+
+            // Alert function for the login page
+            window.showAlert = function(message, type = 'info') {
+                const alertContainer = document.querySelector('.alert-container');
+                if (!alertContainer) {
+                    console.warn('Alert container not found. Message:', message);
+                    alert(`${type.toUpperCase()}: ${message}`);
+                    return;
+                }
+
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert alert-${type}`;
+                alertDiv.setAttribute('role', 'alert');
+
+                let iconHtml = '';
+                if (type === 'success') iconHtml = "<i class='bx bx-check-circle me-2'></i>";
+                if (type === 'error') iconHtml = "<i class='bx bx-error-circle me-2'></i>";
+                if (type === 'warning') iconHtml = "<i class='bx bx-error me-2'></i>";
+                if (type === 'info') iconHtml = "<i class='bx bx-info-circle me-2'></i>";
+
+                alertDiv.innerHTML = `
+                    ${iconHtml}
+                    <span>${message}</span>
+                    <button type="button" class="alert-close" data-bs-dismiss="alert" aria-label="Close"><i class='bx bx-x'></i></button>
+                `;
+                alertContainer.appendChild(alertDiv);
+
+                // Auto-remove alert after 5 seconds
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 5000);
+
+                // Close button functionality
+                const closeBtn = alertDiv.querySelector('.alert-close');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        alertDiv.remove();
+                    });
+                }
+            };
+
+            // Form submission handlers
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+
+            if (loginForm) {
+                loginForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const username = document.getElementById('loginUsername').value;
+                    const password = document.getElementById('loginPassword').value;
+                    
+                    try {
+                        const response = await fetch('http://localhost:5001/api/auth/login', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ username, password })
+                        });
+
+                        const data = await response.json();
+                        
+                        if (response.ok) {
+                            localStorage.setItem('authToken', data.token);
+                            localStorage.setItem('username', data.username);
+                            window.location.href = 'dashboard.html';
+                        } else {
+                            showAlert(data.message || 'Login failed', 'error');
+                        }
+                    } catch (error) {
+                        showAlert('An error occurred during login', 'error');
+                        console.error('Login error:', error);
+                    }
+                });
+            }
+
+            if (registerForm) {
+                registerForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const username = document.getElementById('regUsername').value;
+                    const email = document.getElementById('regEmail').value;
+                    const password = document.getElementById('regPassword').value;
+                    
+                    try {
+                        const response = await fetch('http://localhost:5001/api/auth/register', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ username, email, password })
+                        });
+
+                        const data = await response.json();
+                        
+                        if (response.ok) {
+                            showAlert('Registration successful! Please login.', 'success');
+                            container.classList.remove('active');
+                            registerForm.reset();
+                        } else {
+                            showAlert(data.message || 'Registration failed', 'error');
+                        }
+                    } catch (error) {
+                        showAlert('An error occurred during registration', 'error');
+                        console.error('Registration error:', error);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

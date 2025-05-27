@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Scheduler</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico"> <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="assets/styles/dashboard.css">
+   
+</head>
+<body>
+    <div class="alert-container"></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar">
+                <div class="position-sticky pt-3">
+                    <div class="text-center mb-4">
+                        <h4 class="sidebar-heading">Content Scheduler</h4>
+                        <p class="sidebar-user-welcome mb-0" id="welcomeUser">Welcome, User</p>
+                    </div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" id="dashboardNav">
+                                <i class='bx bxs-dashboard'></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="newContentBtnNav">
+                                <i class='bx bx-plus'></i> New Content
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="calendarNav">
+                                <i class='bx bxs-calendar'></i> Calendar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="analyticsNav">
+                                <i class='bx bxs-bar-chart-alt-2'></i> Analytics
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="settingsNav">
+                                <i class='bx bxs-cog'></i> Settings
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="logout-section mt-auto">
+                        <a class="nav-link" href="#" id="logoutBtn">
+                            <i class='bx bx-log-out'></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom main-header">
+                    <h1 class="h2" id="mainViewHeading">Dashboard</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                            <i class='bx bx-calendar-alt me-1'></i> This week
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dashboard Stats Row -->
+                <div class="row mb-4" id="dashboardStatsRow">
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card stat-card stat-card-posts h-100">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-uppercase mb-1">Posts</div>
+                                        <div class="h5 mb-0 font-weight-bold" id="statTotalPosts">0</div>
+                                    </div>
+                                    <div class="col-auto"><i class='bx bx-news bx-lg stat-icon'></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card stat-card stat-card-blogs h-100">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-uppercase mb-1">Blogs</div>
+                                        <div class="h5 mb-0 font-weight-bold" id="statTotalBlogs">0</div>
+                                    </div>
+                                    <div class="col-auto"><i class='bx bxl-blogger bx-lg stat-icon'></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card stat-card stat-card-videos h-100">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-uppercase mb-1">Videos</div>
+                                        <div class="h5 mb-0 font-weight-bold" id="statTotalVideos">0</div>
+                                    </div>
+                                    <div class="col-auto"><i class='bx bxs-video bx-lg stat-icon'></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card stat-card stat-card-stories h-100">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-uppercase mb-1">Stories</div>
+                                        <div class="h5 mb-0 font-weight-bold" id="statTotalStories">0</div>
+                                    </div>
+                                    <div class="col-auto"><i class='bx bx-book-heart bx-lg stat-icon'></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters mb-4" id="dashboardFiltersRow">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <select class="form-select" id="platformFilter">
+                                <option value="">All Platforms</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="Twitter">Twitter</option>
+                                <option value="Facebook">Facebook</option>
+                                <option value="YouTube">YouTube</option>
+                                <option value="Blog">Blog</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select" id="statusFilter">
+                                <option value="">All Statuses</option>
+                                <option value="Draft">Draft</option>
+                                <option value="Scheduled">Scheduled</option>
+                                <option value="Published">Published</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="tagFilter" placeholder="Filter by tags (comma-sep)...">
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary w-100" id="applyFiltersBtn">Apply Filters</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Cards Section -->
+                <div class="row main-dashboard-section section-fade-in-slide-up" id="contentCardsSection">
+                    <!-- Content cards will be dynamically inserted here -->
+                </div>
+
+                <!-- New Content Section -->
+                <div id="newContentSection" class="main-dashboard-section new-content-section mt-4 d-none">
+                    <form id="contentForm" class="card p-4 shadow-sm">
+                        <input type="hidden" id="contentId">
+                        <div class="mb-3">
+                            <label for="contentTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="contentTitle" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="contentType" class="form-label">Content Type</label>
+                                <select class="form-select" id="contentType" required>
+                                    <option value="">Select type</option>
+                                    <option value="Post">Post</option>
+                                    <option value="Blog">Blog</option>
+                                    <option value="Video">Video</option>
+                                    <option value="Story">Story</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="contentPlatform" class="form-label">Platform</label>
+                                <select class="form-select" id="contentPlatform" required>
+                                    <option value="">Select platform</option>
+                                    <option value="Instagram">Instagram</option>
+                                    <option value="Twitter">Twitter</option>
+                                    <option value="Facebook">Facebook</option>
+                                    <option value="YouTube">YouTube</option>
+                                    <option value="Blog">Blog</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="publishDate" class="form-label">Publish Date</label>
+                                <input type="datetime-local" class="form-control" id="publishDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="contentStatus" class="form-label">Status</label>
+                                <select class="form-select" id="contentStatus" required>
+                                    <option value="Draft">Draft</option>
+                                    <option value="Scheduled">Scheduled</option>
+                                    <option value="Published">Published</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contentTags" class="form-label">Tags (comma-separated)</label>
+                            <input type="text" class="form-control" id="contentTags" placeholder="e.g. marketing, summer, campaign">
+                        </div>
+                        <div class="mb-3">
+                            <label for="contentNotes" class="form-label">Notes</label>
+                            <textarea class="form-control" id="contentNotes" rows="3"></textarea>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary me-2" id="cancelContentBtn">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="saveContentBtn">Save Content</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Calendar Section -->
+                <div id="calendarSection" class="main-dashboard-section calendar-view mt-5 d-none">
+                    <div id="calendar"></div>
+                </div>
+
+                <!-- Analytics Section -->
+                <div id="analyticsSection" class="main-dashboard-section analytics-section mb-5 d-none">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card content-card">
+                                <div class="card-header">Platform Distribution</div>
+                                <div class="card-body">
+                                    <canvas id="platformChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card content-card">
+                                <div class="card-header">Content Status</div>
+                                <div class="card-body">
+                                    <canvas id="statusChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <div class="card content-card">
+                                <div class="card-header">Publishing Timeline (Last 7 Days)</div>
+                                <div class="card-body">
+                                    <canvas id="timelineChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="settingsSection" class="main-dashboard-section settings-section mt-4 d-none">
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <div class="card settings-card">
+                                <div class="card-header">Profile Management</div>
+                                <div class="card-body">
+                                    <form id="profileSettingsForm">
+                                        <div class="mb-3">
+                                            <label for="profileName" class="form-label">Name</label>
+                                            <input type="text" class="form-control" id="profileName">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="profileEmail" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="profileEmail">
+                                        </div>
+                                        <hr>
+                                        <h6>Change Password</h6>
+                                        <div class="mb-3">
+                                            <label for="currentPassword" class="form-label">Current Password</label>
+                                            <input type="password" class="form-control" id="currentPassword">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newPassword" class="form-label">New Password</label>
+                                            <input type="password" class="form-control" id="newPassword">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="confirmNewPassword" class="form-label">Confirm New Password</label>
+                                            <input type="password" class="form-control" id="confirmNewPassword">
+                                        </div>
+                                        <button type="button" id="saveProfileSettingsBtn" class="btn btn-primary">Save Profile</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                            <div class="card settings-card">
+                                <div class="card-header">Platform Preferences</div>
+                                <div class="card-body">
+                                    <form id="platformPreferencesForm">
+                                        <h6>Enable/Disable Platforms</h6>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="enableInstagram" data-platform="Instagram" checked>
+                                            <label class="form-check-label" for="enableInstagram">Instagram</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="enableTwitter" data-platform="Twitter" checked>
+                                            <label class="form-check-label" for="enableTwitter">Twitter</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="enableFacebook" data-platform="Facebook" checked>
+                                            <label class="form-check-label" for="enableFacebook">Facebook</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="enableYouTube" data-platform="YouTube" checked>
+                                            <label class="form-check-label" for="enableYouTube">YouTube</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="enableBlog" data-platform="Blog" checked>
+                                            <label class="form-check-label" for="enableBlog">Blog</label>
+                                        </div>
+                                        <hr>
+                                        <div class="mb-3">
+                                            <label for="defaultPlatform" class="form-label">Default Platform for New Posts</label>
+                                            <select class="form-select" id="defaultPlatform">
+                                                <option value="">None</option>
+                                                <option value="Instagram">Instagram</option>
+                                                <option value="Twitter">Twitter</option>
+                                                <option value="Facebook">Facebook</option>
+                                                <option value="YouTube">YouTube</option>
+                                                <option value="Blog">Blog</option>
+                                            </select>
+                                        </div>
+                                        <button type="button" id="savePlatformPreferencesBtn" class="btn btn-primary">Save Platform Preferences</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <div class="card settings-card">
+                                <div class="card-header">Notification Settings</div>
+                                <div class="card-body">
+                                    <form id="notificationSettingsForm">
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="emailNotifications">
+                                            <label class="form-check-label" for="emailNotifications">Email Notifications</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="inAppNotifications">
+                                            <label class="form-check-label" for="inAppNotifications">In-App Notifications</label>
+                                        </div>
+                                        <hr>
+                                        <div class="mb-3">
+                                            <label for="postReminder" class="form-label">Reminders for Scheduled Posts</label>
+                                            <select class="form-select" id="postReminder">
+                                                <option value="none">None</option>
+                                                <option value="15min">15 minutes before</option>
+                                                <option value="1hr">1 hour before</option>
+                                                <option value="24hr">24 hours before</option>
+                                            </select>
+                                        </div>
+                                        <button type="button" id="saveNotificationSettingsBtn" class="btn btn-primary">Save Notification Settings</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                            <div class="card settings-card">
+                                <div class="card-header">Theme & Appearance</div>
+                                <div class="card-body">
+                                    <form id="themeAppearanceForm">
+                                        <div class="mb-3">
+                                            <label class="form-label">Theme Mode</label>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="themeToggle">
+                                                <label class="form-check-label" for="themeToggle">Dark Mode</label>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="mb-3">
+                                            <label for="fontSizePreference" class="form-label">Font Size</label>
+                                            <select class="form-select" id="fontSizePreference">
+                                                <option value="small">Small</option>
+                                                <option value="medium" selected>Medium</option>
+                                                <option value="large">Large</option>
+                                            </select>
+                                        </div>
+                                        <button type="button" id="saveThemeAppearanceBtn" class="btn btn-primary">Apply Appearance</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+    <script>
+        // Initialize theme and font size from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            if (!localStorage.getItem('authToken')) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Set username in welcome message
+            const username = localStorage.getItem('username') || 'User';
+            document.getElementById('welcomeUser').textContent = `Welcome, ${username}`;
+
+            // Apply saved theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeToggle').checked = true;
+            }
+
+            // Apply saved font size
+            const savedFontSize = localStorage.getItem('fontSize') || 'medium';
+            document.body.classList.remove('font-small', 'font-medium', 'font-large');
+            document.body.classList.add(`font-${savedFontSize}`);
+            document.getElementById('fontSizePreference').value = savedFontSize;
+        });
+    </script>
+    <script src="../src/js/dashboard.js"></script>
+</body>
+</html>
